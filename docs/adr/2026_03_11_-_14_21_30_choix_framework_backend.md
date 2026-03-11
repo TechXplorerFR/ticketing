@@ -6,7 +6,7 @@ Le projet a besoin d'une technologie afin de répondre au besoin du cahier des c
 
 ## Décision
 
-Suite à une veille technologique, notre choix c'est porté sur `Node.js`, `Express.js`, `Sequelize` et `Swagger`.
+Suite à une veille technologique, notre choix s'est porté sur `Node.js`, `Express.js`, `Sequelize` et `Swagger`.
 
 Les raisons de ce choix sont les suivantes :
 
@@ -39,4 +39,4 @@ _Swagger_ :
 
 ## Conséquences
 
-L'API aura une structure net et précise avec des frameworks connus ce qui aide grandement à la résolution de problèmes et au support communautaire. De plus, cette ensemble de technologie permettra un gain de temps et une simplification du code.
+L'API aura une structure nette et précise avec des frameworks connus ce qui aide grandement à la résolution de problèmes et au support communautaire. De plus, cette ensemble de technologie permettra un gain de temps et une simplification du code.
