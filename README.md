@@ -2,38 +2,38 @@
 
 ## Description
 
-Dans le cadre d'une évolution du service de notre entreprise, nous développons un module de gestion de tickets d'incident.
+Dans le cadre d'une évolution du service de notre entreprise, nous développons un module de gestion de tickets d'incidents.
 L’objectif est de permettre aux utilisateurs de créer, consulter et suivre des tickets, et aux
-techniciens de les mettre à jour ou clôturer.
+techniciens de les mettre à jour ou de les clôturer.
 
 ## Installation
 
-Afin d'installer notre projet sur votre machine, vous devez cloner le repo GitHub. Pour ce faire aller sur le [repo](https://github.com/TechXplorerFR/ticketing) puis clicker sur le bouton code vert.
+Afin d'installer notre projet sur votre machine, vous devez cloner le repo GitHub. Pour ce faire, allez sur le [repo](https://github.com/TechXplorerFR/ticketing) puis clickez sur le bouton code vert.
 
 ![clone depuis GitHub](./docs/img/screenshot_clone.png)
 
-Une fois fais, ouvrez un terminal et créer un dossier pour y mettre le projet :
+Une fois fait, ouvrez un terminal et créez un dossier pour y mettre le projet :
 
 ```bash
 mkdir ticketing
 cd ticketing
 ```
 
-Ensuite, cloner le repo localement :
+Ensuite, clonez le repo localement :
 
 ```bash
 git clone https://github.com/TechXplorerFR/ticketing
 ```
 
-Puis y accéder avec la ligne suivante :
+Puis accédez-y avec la ligne suivante :
 
 ```bash
 code .
 ```
 
-Vous avez maintenant accès au projet depuis votre appareil en local. Il vous reste désormais à télécharger les modules et extensions nécessaires pour pouvoir travailler dessus.
+Vous avez maintenant accès au projet en local. Il vous reste désormais plus qu'à télécharger les modules et extensions nécessaires pour pouvoir travailler dessus.
 
-Vous aurez besoin des suivant :
+Vous aurez besoin des suivants :
 
 | Nom     | Version Minimum | Lien de téléchargement                               |
 | ------- | --------------- | ---------------------------------------------------- |
@@ -55,7 +55,7 @@ Vous êtes maintenant prêt à vous lancer sur le projet, n'oubliez pas de passe
 
 ## Usage
 
-_Création de ticket_ :
+_Créer un ticket_ :
 
 A DEFINIR
 
@@ -77,11 +77,11 @@ A DEFINIR
 
 ## Bugs Connus
 
-Aucun bug connu recensé à ce jour. Vous pourrez les trouver dans l'onglet [Issues](https://github.com/TechXplorerFR/ticketing/issues) une fois qu'il y en aura.
+Aucun bug connu n'a été recensé à ce jour. Vous pourrez les trouver dans l'onglet [Issues](https://github.com/TechXplorerFR/ticketing/issues) une fois qu'il y en aura.
 
 ## Versionning
 
-Vous pouvez retrouver les différentes version dans l'onglet [déploiement](https://github.com/TechXplorerFR/ticketing/releases) de GitHub.
+Vous pouvez retrouver les différentes versions dans l'onglet [déploiement](https://github.com/TechXplorerFR/ticketing/releases) de GitHub.
 
 Version actuelle : v0.0.0
 Latest version : v0.0.0
@@ -89,7 +89,7 @@ Latest stable version : null
 
 ## Contributing
 
-Pour contribuer à notre projet vous pouvez regarder nos [Instructions de contribution](./CONTRIBUTING.md).
+Pour contribuer à notre projet, vous pouvez regarder nos [Instructions de contribution](./CONTRIBUTING.md).
 
 ## Licence
 
