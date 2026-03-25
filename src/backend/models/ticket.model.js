@@ -18,6 +18,10 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: true,
       defaultValue: "anonymous",
     },
+    assigneeId: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+    },
   });
 
   return Ticket;

@@ -4,6 +4,7 @@ const { Sequelize } = require("sequelize");
 const sequelizeOptions = {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
+  logging: process.env.NODE_ENV === "test" ? false : undefined,
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -24,5 +25,16 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.tickets = require("./ticket.model.js")(sequelize, Sequelize);
+db.users = require("./user.model.js")(sequelize, Sequelize);
+
+db.users.hasMany(db.tickets, {
+  foreignKey: "assigneeId",
+  as: "assignedTickets",
+});
+
+db.tickets.belongsTo(db.users, {
+  foreignKey: "assigneeId",
+  as: "assignee",
+});
 
 module.exports = db;
