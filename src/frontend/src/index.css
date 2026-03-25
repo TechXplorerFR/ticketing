@@ -41,6 +41,12 @@ h1 {
   margin-bottom: 20px;
 }
 
+.user-form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
 input,
 textarea,
 select,
@@ -60,6 +66,67 @@ button {
 
 button:hover {
   opacity: 0.9;
+}
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.role-switcher {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+
+.role-btn {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.role-btn.active {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.user-panel {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.user-panel h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.user-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.user-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.role-actions {
+  display: flex;
+  gap: 6px;
 }
 
 .toolbar {
@@ -128,6 +195,13 @@ button:hover {
   gap: 8px;
 }
 
+.assign-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
 .actions .danger {
   background: #b91c1c;
   border-color: #b91c1c;
@@ -144,5 +218,16 @@ button:hover {
 
   .toolbar {
     flex-wrap: wrap;
+  }
+
+  .role-switcher,
+  .role-actions,
+  .assign-row {
+    flex-wrap: wrap;
+  }
+
+  .user-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
