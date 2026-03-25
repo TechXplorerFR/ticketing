@@ -82,7 +82,7 @@ En arrivant sur la page de l'application, remplissez les différents champs requ
 
 _Assigner un ticket_ :
 
-Lors de la création d'un ticket, cliquer sur le menu déorulant d'assignation et choisissez à qui assigner la tâche.
+Lors de la création d'un ticket, cliquez sur le menu déroulant d'assignation et choisissez à qui assigner la tâche.
 
 _Assigner une priorité à un ticket_ :
 
