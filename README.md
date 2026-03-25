@@ -53,27 +53,48 @@ npm i
 
 Vous êtes maintenant prêt à vous lancer sur le projet, n'oubliez pas de passer par la section [contributing](#contributing) avant de commencer.
 
+## Execution du code
+
+Pour exécuter le code, exécutez les commandes suivantes dans deux terminaux distincts:
+
+**Terminal 1:**
+
+```bash
+cd src/frontend
+npm run build
+npm run preview
+```
+
+**Terminal 2:**
+
+```bash
+cd src/backend
+npm run dev
+```
+
+Vous pourrez accéder à l'application à l'adresse `http://localhost:4173`
+
 ## Usage
 
 _Créer un ticket_ :
 
-A DEFINIR
+En arrivant sur la page de l'application, remplissez les différents champs requis et cliquez sur "Créer un ticket".
 
 _Assigner un ticket_ :
 
-A DEFINIR
+Lors de la création d'un ticket, cliquez sur le menu déroulant d'assignation et choisissez à qui assigner la tâche.
 
 _Assigner une priorité à un ticket_ :
 
-A DEFINIR
+Cette fonctionnalité n'est pas supportée par notre logiciel pour l'instant.
 
 _Changer l'état d'un ticket_ :
 
-A DEFINIR
+Vous pouvez changer l'état d'un ticket en cliquant sur le bouton "Fermer" ou "Ouvrir" permettant d'effectuer l'action associée.
 
 _Consulter ses tickets_ :
 
-A DEFINIR
+Vous pouvez consulter vos tickets en bas de la page, en mode lecture. Dans les autres modes, vous verrez l'ensemble des tickets contenus dans la base.
 
 ## Bugs Connus
 
