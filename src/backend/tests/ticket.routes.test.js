@@ -1,3 +1,10 @@
+/**
+ * Test Suite for Ticket and User API Routes
+ * Tests all CRUD operations, validation, and error handling for both resources.
+ * Uses in-memory SQLite database for isolated test environment.
+ */
+
+// Set test environment variables
 process.env.NODE_ENV = "test";
 process.env.dialect = "sqlite";
 process.env.DB = ":memory:";
@@ -7,6 +14,12 @@ const request = require("supertest");
 const app = require("../server");
 const db = require("../models");
 
+/**
+ * Helper function to create a test user
+ * @param {string} name - User's name
+ * @param {string} role - User's role (default: 'viewer')
+ * @returns {Object} Created user object
+ */
 const createUser = async (name, role = "viewer") => {
   const response = await request(app)
     .post("/api/users")
@@ -16,6 +29,11 @@ const createUser = async (name, role = "viewer") => {
   return response.body;
 };
 
+/**
+ * Helper function to create a test ticket
+ * @param {Object} payload - Ticket data {title, description?, requester?, assigneeId?}
+ * @returns {Object} Created ticket object
+ */
 const createTicket = async (payload) => {
   const response = await request(app)
     .post("/api/tickets")
@@ -25,23 +43,31 @@ const createTicket = async (payload) => {
   return response.body;
 };
 
+// Main test suite
 describe("Routes API Ticket et Users", () => {
-  let assigneeId;
+  let assigneeId; // Will store ID of test assignee user
 
+  // Initialize database before all tests
   beforeAll(async () => {
     await db.sequelize.sync({ force: true });
   });
 
+  // Reset database before each test
   beforeEach(async () => {
     await db.sequelize.sync({ force: true });
+    // Create a default assignee for test tickets
     const assignee = await createUser("Alice", "agent");
     assigneeId = assignee.id;
   });
 
+  // Close database connection after all tests
   afterAll(async () => {
     await db.sequelize.close();
   });
 
+  // ============ USER TESTS ============
+
+  // Test: Create user with valid role
   it("cree un utilisateur avec role valide", async () => {
     const response = await request(app)
       .post("/api/users")
@@ -52,6 +78,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.role).toBe("admin");
   });
 
+  // Test: Reject user creation without name
   it("refuse la creation d'utilisateur sans nom", async () => {
     const response = await request(app)
       .post("/api/users")
@@ -61,6 +88,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.message).toContain("nom utilisateur");
   });
 
+  // Test: Reject user creation with invalid role
   it("refuse la creation d'utilisateur avec role invalide", async () => {
     const response = await request(app)
       .post("/api/users")
@@ -70,6 +98,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.message).toContain("Role utilisateur invalide");
   });
 
+  // Test: Update user role successfully
   it("met a jour le role d'un utilisateur", async () => {
     const created = await createUser("Dana", "viewer");
 
@@ -82,6 +111,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.role).toBe("agent");
   });
 
+  // Test: Reject role update for non-existent user
   it("refuse le changement de role sur un id introuvable", async () => {
     await request(app)
       .put("/api/users/9999/role")
@@ -89,6 +119,9 @@ describe("Routes API Ticket et Users", () => {
       .expect(404);
   });
 
+  // ============ TICKET TESTS ============
+
+  // Test: Create ticket with trimmed title and assignee
   it("cree un ticket avec titre trimme et assignee", async () => {
     const response = await request(app)
       .post("/api/tickets")
@@ -105,6 +138,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.assignee.id).toBe(assigneeId);
   });
 
+  // Test: Reject ticket creation without title
   it("refuse la creation d'un ticket sans titre", async () => {
     await request(app)
       .post("/api/tickets")
@@ -114,6 +148,7 @@ describe("Routes API Ticket et Users", () => {
       .expect(400);
   });
 
+  // Test: Reject ticket with invalid assignee ID
   it("refuse la creation avec assigneeId invalide", async () => {
     const response = await request(app)
       .post("/api/tickets")
@@ -126,6 +161,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.message).toContain("identifiant d'assignation");
   });
 
+  // Test: Reject ticket with non-existent assignee
   it("refuse la creation avec assigneeId introuvable", async () => {
     const response = await request(app)
       .post("/api/tickets")
@@ -138,6 +174,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.message).toContain("Utilisateur assigne introuvable");
   });
 
+  // Test: Get list of tickets with status filter
   it("retourne la liste des tickets avec filtre status", async () => {
     await createTicket({ title: "Ticket 1", assigneeId });
     const created = await createTicket({ title: "Ticket 2", assigneeId });
@@ -147,10 +184,12 @@ describe("Routes API Ticket et Users", () => {
       .send({ status: "closed" })
       .expect(200);
 
+    // Get tickets filtered by open status
     const openResponse = await request(app)
       .get("/api/tickets?status=open")
       .expect(200);
 
+    // Get tickets filtered by closed status
     const closedResponse = await request(app)
       .get("/api/tickets?status=closed")
       .expect(200);
@@ -159,6 +198,7 @@ describe("Routes API Ticket et Users", () => {
     expect(closedResponse.body).toHaveLength(1);
   });
 
+  // Test: Get single ticket by ID with assignee details
   it("retourne un ticket par id avec son assignee", async () => {
     const created = await createTicket({
       title: "Ticket detail",
@@ -174,12 +214,14 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.assignee.id).toBe(assigneeId);
   });
 
+  // Test: Return 404 for non-existent ticket
   it("retourne 404 pour un ticket inexistant", async () => {
     await request(app)
       .get("/api/tickets/9999")
       .expect(404);
   });
 
+  // Test: Update ticket status and assignee
   it("met a jour le statut et l'assignation d'un ticket", async () => {
     const created = await createTicket({ title: "Ticket a modifier", assigneeId });
     const secondUser = await createUser("Eva", "agent");
@@ -196,6 +238,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.assignee.id).toBe(secondUser.id);
   });
 
+  // Test: Unassign a ticket by setting assigneeId to null
   it("desassigne un ticket avec assigneeId null", async () => {
     const created = await createTicket({ title: "Ticket desassignable", assigneeId });
 
@@ -208,6 +251,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.assignee).toBeNull();
   });
 
+  // Test: Reject empty update request
   it("refuse une mise a jour vide", async () => {
     const created = await createTicket({ title: "Ticket sans update", assigneeId });
 
@@ -217,6 +261,7 @@ describe("Routes API Ticket et Users", () => {
       .expect(400);
   });
 
+  // Test: Reject update with empty title
   it("refuse une mise a jour avec titre vide", async () => {
     const created = await createTicket({ title: "Ticket titre", assigneeId });
 
@@ -226,6 +271,7 @@ describe("Routes API Ticket et Users", () => {
       .expect(400);
   });
 
+  // Test: Reject update with invalid assignee ID
   it("refuse une mise a jour avec assigneeId invalide", async () => {
     const created = await createTicket({ title: "Ticket invalide update", assigneeId });
 
@@ -237,6 +283,7 @@ describe("Routes API Ticket et Users", () => {
     expect(response.body.message).toContain("identifiant d'assignation");
   });
 
+  // Test: Return 404 when updating non-existent ticket
   it("retourne 404 si ticket a mettre a jour introuvable", async () => {
     await request(app)
       .put("/api/tickets/9999")
@@ -244,6 +291,7 @@ describe("Routes API Ticket et Users", () => {
       .expect(404);
   });
 
+  // Test: Delete ticket and verify it no longer exists
   it("supprime un ticket puis renvoie 404 a la lecture", async () => {
     const created = await createTicket({ title: "Ticket a supprimer", assigneeId });
 
@@ -256,6 +304,7 @@ describe("Routes API Ticket et Users", () => {
       .expect(404);
   });
 
+  // Test: Return 404 when deleting non-existent ticket
   it("retourne 404 sur suppression d'un ticket inexistant", async () => {
     await request(app)
       .delete("/api/tickets/9999")
