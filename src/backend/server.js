@@ -26,15 +26,12 @@ if (process.env.NODE_ENV !== "test") {
   );
 }
 
-var corsOptions = {
-  origin: "http://localhost:8080",
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Rate limiter - désactivé en mode test
+// Rate limit - désactivé en mode test
 if (process.env.NODE_ENV !== "test") {
   const limiter = RateLimit({
     windowMs: 1 * 60 * 1000, 
@@ -48,18 +45,19 @@ app.use(compression());
 const db = require("./models");
 
 // Synchroniser la base de données avec les modeles de notre appli
-db.sequelize.sync().catch((err) => {
-  console.log("Failed to sync db: " + err.message);
-});
+if (process.env.NODE_ENV !== "test") {
+  db.sequelize.sync().catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
+}
 
 // On sert la page Swagger sur /api-docs
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Import routes
-require("./routes/auth.routes")(app);
-require("./routes/example.routes")(app);
+require("./routes/ticket.routes")(app);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
