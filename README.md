@@ -78,7 +78,7 @@ Vous pourrez accéder à l'application à l'adresse `http://localhost:4173`
 
 _Créer un ticket_ :
 
-En arrivant sur la page de l'application, remplissez sur les différents champs requis et cliquez sur "Créer un ticket".
+En arrivant sur la page de l'application, remplissez les différents champs requis et cliquez sur "Créer un ticket".
 
 _Assigner un ticket_ :
 
